@@ -77,7 +77,9 @@ class Window: #Handels all the Stuff in the adjustments window
 
         self.output = Frame(self.master)
         self.output.pack(side=LEFT)
-
+        
+        self.calculate()
+        
     def calculate(self):
         #Get Values out of all the textboxes
         P1 = self.Power1.get()

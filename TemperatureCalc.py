@@ -2,7 +2,7 @@ from tkinter import Tk
 from tkinter.filedialog import *
 import matplotlib
 matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 
 class Adjustable: #Makes one Label + Textbox Line
@@ -143,25 +143,25 @@ class Window: #Handels all the Stuff in the adjustments window
         a.plot(self.Datax, self.Datay)
 
         canvas = FigureCanvasTkAgg(f, self.output)
-        canvas.show()
+        canvas.draw()
         canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
 
-        toolbar = NavigationToolbar2TkAgg(canvas, self.output)
+        toolbar = NavigationToolbar2Tk(canvas, self.output)
         toolbar.update()
         canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=True)
 
     def export(self):
+        self.calculate()
         ExportString = ""
         for n in range(0,len(self.Datax)):
             ExportString += str(self.Datax[n]) + "," + str(self.Datay[n]) + "\n"
         OutputDir = askdirectory()
-        UniverseFile = open(str(OutputDir) +"/Export.csv", "w")
-        UniverseFile.write(ExportString)
-        UniverseFile.close()
+        if OutputDir != "":
+            UniverseFile = open(str(OutputDir) +"/Export.csv", "w")
+            UniverseFile.write(ExportString)
+            UniverseFile.close()
 
 root = Tk()
 root.title("Temperature Flow")
 Window1 = Window(root)
 root.mainloop()
-
-
